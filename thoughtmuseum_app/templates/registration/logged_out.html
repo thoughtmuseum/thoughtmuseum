@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+
+{% block content %}
+<section class="top-headless-margin">
+	<div class="container">
+		<hr>
+		<div class="row">
+			<p class='centered-element'>You have successfully logged out.</p>			
+		</div>
+		<div class="row">
+			<p class='centered-element'><a href="{% url 'login' %}">Login</a></p>
+		</div>
+		<hr>
+	</div>
+</section>
+{% endblock %}

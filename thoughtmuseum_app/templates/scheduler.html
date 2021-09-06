@@ -1,0 +1,310 @@
+{% extends "index.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block extra_head %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock %}
+
+{% block content %}
+
+
+<!-- Header -->
+<section class="light top-headless-margin" id="scheduler">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 meetings text-center">
+				<p>
+					<a href="../" class="btn btn-lg btn-outline">
+						<i data-feather="chevrons-left"></i>
+						Back to meetings
+					</a>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="mb-2">
+					<h4> Meeting scheduler</h4>
+				</div>
+				<!-- Upload form. Note enctype attribute! -->
+				<!-- form for whole page to preserve fields while converting tzs-->
+				<form action="." method="post" enctype="multipart/form-data" class="form-horizontal"
+					id="scheduler-form">
+
+					{% csrf_token %}
+
+					<div class="row mb-2">
+						<label for="TmpTeacher" class="col-md-5 control-label text-right my-auto">Teacher:</label>
+						<div class="col-md-7">
+							{{ form1.teacher }}
+						</div>
+					</div>
+					<div class="row mb-2">
+						<label for="TmpTeacher" class="col-md-5 control-label text-right my-auto">Student:</label>
+						<div class="col-md-7 controls">
+							{{ form1.student }}
+						</div>
+					</div>
+					<div class="row mb-2">
+						<label for="TmpTeacher" class="col-md-5 control-label text-right my-auto">
+							<button type="button" class="btn btn-default btn-outline" id="addstudents">
+								Add more students</button>
+						</label>
+					</div>
+					<div class="row mb-2" id="student2">
+						<label class="col-md-5 control-label text-right my-auto">Student 2:</label>
+						<div class="col-md-7 controls hidden-student">
+							{{ form1.student2 }}
+						</div>
+					</div>
+					<div class="row mb-2" id="student3">
+						<label class="col-md-5 control-label text-right my-auto">Student 3:</label>
+						<div class="col-md-7 controls hidden-student">
+							{{ form1.student3 }}
+						</div>
+					</div>
+					<div class="row mb-2" id="student4">
+						<label class="col-md-5 control-label text-right my-auto">Student 4:</label>
+						<div class="col-md-7 controls hidden-student">
+							{{ form1.student4 }}
+						</div>
+					</div>
+					<div class="row mb-2" id="student5">
+						<label class="col-md-5 control-label text-right my-auto">Student 5:</label>
+						<div class="col-md-7 controls hidden-student">
+							{{ form1.student5 }}
+						</div>
+					</div>
+
+					<div class="row mb-2">
+						<label for="TmpDate" class="col-md-5 text-right my-auto
+								control-label">Meeting Time:</label>
+						<div class="col-md-7 controls">
+							<div class="form-inline">
+								{{ form1.meeting_hour }}
+								{{ form1.meeting_minute }}
+								{{ form1.meeting_meridiem }}
+							</div>
+						</div>
+					</div>
+
+					<div class="row mb-2">
+						<label for="TmpDate" class="col-md-5 text-right my-auto
+								control-label">Duration:</label>
+						<div class="col-md-7 controls">							
+								{{ form1.duration }}						
+						</div>
+					</div>
+					<div class="row mb-2">
+						<label for="meeting_date" class="col-md-5 text-right my-auto
+								 control-label">Date:</label>
+						<div class="col-md-7 d-flex">
+							{{ form1.meeting_date }}
+						</div>
+					</div>
+					<div class="row mb-2">
+						<label for="meeting_time" class="col-md-5 text-right my-auto
+								 control-label">Repeat every:
+
+							<div>
+								<img title="Click for explanations."
+									src="{% static 'img/question_mark_in_circle.jpg' %}" alt="" width="20"
+									data-toggle="modal" data-target="#myModal">
+							</div>
+							<!-- Modal -->
+							<div id="myModal" class="modal fade" role="dialog">
+								<div class="modal-dialog">
+									<!-- Modal content-->
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+										<div class="modal-body">
+											<p>If you meet with your student weekly or monthly at fixed times and days,
+												you can here schedule several future meetings.
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</label>
+
+						<div class="col-md-7 controls">
+							{{ form1.repeat_interval }}
+						</div>
+
+					</div>
+					<div class="row mb-2">
+						<div class="col-md-5 text-right my-auto">
+							<label for="meeting_time" class="my-auto
+								 control-label">How many times:
+							</label>
+						</div>
+
+						<div class="col-md-7 controls">
+							{{ form1.repeat_number }}
+						</div>
+					</div>
+					<div class="row mb-2">
+						<div class="offset-md-5 col-md-7">
+							<button type="submit" class="btn btn-default btn-outline"
+								name="meeting-setup">Submit</button>
+						</div>
+					</div>
+
+			</div>
+			<div class="col-md-6 px-4">
+				<p>Note: Schedule the meeting in the student's timezone.</p>
+				<h4 class="text-center">Timezone Converter</h4>
+
+				<div class="row mb-2">
+					<label for="tmp_date" class="col-md-2 offset-md-2 my-auto
+									 control-label">Date:</label>
+					<div class="col-md-7">
+						<div class="form-inline">
+							{{ form2.tmp_date }}
+						</div>
+					</div>
+				</div>
+				<div class="row mb-2">
+					<div class="col-md-6 timecalc-student">
+						<h4>Student</h4>
+						<div class="row mb-2">
+							<label for="TmpTeacher" class="col-md-12 my-auto">Timezone:</label>
+							<div class="col-md-12 controls">
+								{{ form2.student_timezone }}
+							</div>
+						</div>
+						<div class="row mb-2">
+							<label for="TmpDate" class="col-md-12 my-auto">Time:</label>
+							<div class="col-md-12 controls">
+								<div class="form-inline">
+									{{ form2.student_hour }}
+									{{ form2.student_min }}
+									{{ form2.student_meridiem }}
+								</div>
+							</div>
+						</div>
+						<div class="row mb-2">
+							<div class="col-md-12">
+								<button type="submit" class="btn btn-default btn-outline" name="student_to_teacher">
+									Convert <i data-feather="arrow-right"></i>
+								</button>
+							</div>
+						</div>
+						<div class="row mb-2">
+							<label for="TimeOrigin" class="col-md-12"></label>
+						</div>
+					</div>
+					<div class="col-md-6 timecalc-teacher">
+						<h4>Teacher</h4>
+						<div class="row mb-2">
+							<label for="TmpTeacher" class="col-md-12 my-auto">Timezone:</label>
+							<div class="col-md-12 controls">
+								{{ form2.teacher_timezone }}
+							</div>
+						</div>
+						<div class="row mb-2">
+							<label for="TmpDate" class="col-md-12 my-auto">Time:</label>
+							<div class="col-md-12 controls">
+								<div class="form-inline ml-auto d-inline-flex">
+									{{ form2.teacher_hour }}
+									{{ form2.teacher_min }}
+									{{ form2.teacher_meridiem }}
+								</div>
+							</div>
+						</div>
+						<div class="row mb-2">
+							<div class="col-md-12">
+								<button type="submit" class="btn btn-default btn-outline" name="teacher_to_student">
+									<i data-feather="arrow-left"></i> Convert
+								</button>
+							</div>
+						</div>
+						<div class="row mb-2">
+							<label for="TimeOrigin" class="col-md-12"></label>
+						</div>
+					</div>
+				</div>
+				</form>
+				<div class="timecalc-result">
+					<div class="col-md-12">
+						<div class="d-flex justify-content-between">
+							<div class="col-md-5">
+								{{ time_student }}
+							</div>
+							<div class="col-md-2">
+								<i data-feather="arrow-left"></i><i data-feather="arrow-right"></i>
+							</div>
+							<div class="col-md-5">
+								{{ time_teacher }}
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+			<!-- <hr class="star-light"> -->
+			<div class="row">
+				<div class="col-md-12">
+				<div class="col-md-12">
+					<h4 class="text-center" {% if not_scheduled_meeting_date %}  style="color: red" {% else %} style="color: green" {% endif %} >{{ success }} </h4>
+					{% if not_scheduled_meeting_date %}
+						<h4 class="text-center" style="color: red"> Not scheduled:</h4>
+					{% endif %}
+					{% for date in not_scheduled_meeting_date %}
+						<h4 class="text-center" style="color: red"> {{date.0}}</h4>
+					{% endfor %}
+					{% if success %}
+						<h6 class="text-center">The reminders will be sent before the meeting </h6>
+					{% endif %}
+					{% if collision_meetings %}
+						{% for cm in collision_meetings %}
+						 <h6 style="color: red" class="text-center">The date of the meeting overlap  {{cm}} {{cm.get_meeting_time_for_the_student  }}  </h6>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	$(function () {
+		$("#datepicker").datepicker({
+			showOn: "button",
+			buttonImage: "{% static 'img/calender_symbol_small.gif' %}",
+			buttonImageOnly: true,
+			buttonText: "Select date"
+		});
+	});
+
+	$(function () {
+		$("#datepicker1").datepicker({
+			showOn: "button",
+			buttonImage: "{% static 'img/calender_symbol_small.gif' %}",
+			buttonImageOnly: true,
+			buttonText: "Select date"
+		});
+	});
+
+	$(document).ready(function () {
+		// Hide the additional photo uploads
+		var $additionals = $("#student2, #student3, #student4, #student5");
+		$additionals.hide();
+		// Show more photo uploaders when we click 
+		$("#addstudents").click(function () {
+			$additionals.toggle();
+		});
+	});
+</script>
+
+
+
+{% endblock content %}

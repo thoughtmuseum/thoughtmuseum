@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+{% load user_tags %}
+
+{% block content %}
+<section class="top-headless-margin">
+	<div class="container">
+		<div class="row">
+			<div class='col-6 offset-3'>
+				<h3 class='section-title'>My Profile</h3>
+				{% include 'avatar/add.html' %}
+				<form action="https://form.jotform.com/201397486796170" method="get" target="_blank">
+					<button style="margin-bottom: 1em; font-weight: 900;" class='btn btn-block btn-primary' type="submit">Update profile</button>
+				</form>
+			
+				<form method="post" enctype="multipart/form-data">
+  				  {% csrf_token %}
+  					{{ user_form|crispy }}									
+  					{{ details_user_form|crispy }}
+					{% if request.user|has_group:"update_group" %}
+    				<input class='btn btn-block btn-primary' 
+						type="submit" value="Update" />
+					{% endif %}
+				  </form>				
+			</div>
+		</div>
+		<hr/>
+		<div class='row'>
+			<div class='col-12 text-center'>
+			{% if request.user|has_group:"update_group" %}
+				<p>Or cancel and go back to your <a href="/">Dashboard</a></p>
+			{% else %}
+				<p>Go back to your <a href="{% url 'dashboard' %}">Dashboard</a></p>
+			{% endif %}
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

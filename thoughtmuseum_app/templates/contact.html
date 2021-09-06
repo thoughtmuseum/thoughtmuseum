@@ -1,0 +1,70 @@
+{% extends "index.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<!-- Header -->
+<header id="dashboard">
+	<div class="container">
+		<div class="row text-center">
+			<div class="col-12">
+				<p>Contact Us</p>
+			</div>
+		</div>
+		{% if msg %}
+		<div class="row text-center">
+			<div class="col-12">
+				<span class="h3 text-danger">{{msg}}</span>
+			</div>
+		</div>
+		{% endif %}
+	</div>
+</header>
+
+<section id="contact">
+	<div class="container">
+		<div class="row">
+			<div class="col-6">
+                <div class="contact-col-wrap-l">
+                    <p>We would love to hear from you! Please fill out the form and one of our team members will contact you as soon as possible.</p>                    
+                </div>
+			</div>
+			<div class="col-6">
+                <div class="contact-col-wrap-r">
+					<form method="post">
+						{% csrf_token %}
+						<div class="form-group">
+							<label class="control-label">NAME</label>
+							<div class="controls">
+								<div class="form-inline">
+									{{ form.first_name }}									
+								</div>
+							</div>							
+						</div>
+						<div class="form-group">
+							<div class="form-inline">
+								{{ form.last_name }}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">EMAIL</label>
+							{{form.email}}
+						</div>
+						<div class="form-group">
+							<label class="control-label">PHONE</label>
+							{{form.phone}}
+						</div>
+						<div class="form-group">
+							<label class="control-label">COMMENTS</label>
+							{{form.comments}}
+						</div>
+							<button type="submit" class="btn btn-danger form-control font-bold">SUBMIT</button>
+					</form>
+                </div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

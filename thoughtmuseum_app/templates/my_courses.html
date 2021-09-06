@@ -1,0 +1,82 @@
+{% extends "index.html" %}
+{% load user_tags %}
+
+{% block content %}
+<section class="top-headless-margin">
+	<div class="container">
+        <h3 class='section-title'>My Courses</h3>
+        <hr>
+		<div class="row mt-4">
+			<div class="col-7">
+				<div class="row">
+					{% for exam in exams_taken %}
+					{% exam_results exam request.user as results %}
+					{% for r in results %}
+						<div class="col-3 border rounded">
+							<div class="mt-1"><b>{{exam.name}}</b></div>
+							<hr>
+							<div>{{r.date_submitted}}</div>
+							<hr>
+							<table class="table table-borderless table-sm">
+								<tr>
+									<th>Pass</th>
+									<th>Grade</th>
+									<th>Score</th>
+								</tr>
+							<tbody>
+								<tr>
+									<td>
+										{% if r.has_pass %}<i data-feather="check" style="color: green;"></i>
+										{% else %}<i data-feather="x" style="color:red"></i>{% endif %}
+
+									</td>
+									<td>{{r.grade}}</td>
+									<td>{{r.percentage_score}}%</td>
+								</tr>
+							</tbody>
+							</table>
+						</div>
+					{% endfor %}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-5">
+                {% for c in classes %}
+                    <h6>{{c.name}}</h6>
+                    <hr />
+                    {% for e in c.exams.all %}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="my-1 p-1 border rounded">
+                            <form method="POST">
+                                {% csrf_token %}
+                            <div class="d-flex justify-content-between">
+                                <div class="align-self-center">{{e.name}}</div>
+                                <div class="align-self-center">{{e.date}}</div>
+                                {% if request.user in e.taken.all %}
+									<div class="align-self-center mx-4"><i data-feather="check" style="color: green;"></i></div>
+                                {% elif request.user in e.enrolled.all %}
+                                    {% if e.active %}
+                                        <div class="text-right align-self-center"><button class="btn btn-primary" type="submit" name='take'>TAKE</button></div>
+                                    {% else %}
+                                        <div class="align-self-center mx-1"><b>Wait for admin to activate the exam</b></div>
+                                        <div class="align-self-center"><button class="btn btn-primary btn-sm" type="button" onclick="window.location.href=window.location.href">REFRESH</button></div>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="text-right align-self-center"><button class="btn btn-secondary btn-sm" type="submit" name='enroll'>ENROLL</button></div>
+                                {% endif %}
+                                <input type="hidden" value="{{e.pk}}" name="exam_id" />
+                            </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div> 
+                    {% endfor %}                       
+                {% endfor %}
+
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% load user_tags %}
+<div class="navbar navbar-default" role="navigation">
+	<div class="navbar-header d-block d-sm-none">
+  		<button type="button" class="navbar-toggle" 
+  			data-toggle="collapse" 
+  			data-target=".sidebar-navbar-collapse">
+    		<span class="sr-only">Toggle navigation</span>
+    		<span class="icon-bar"></span>
+    		<span class="icon-bar"></span>
+    		<span class="icon-bar"></span>
+  		</button>
+  		<span class="navbar-brand">Subject selection</span>
+	</div>
+	<div class="navbar-collapse sidebar-navbar-collapse">
+		<ul class="sidebar-nav" id="top">
+			{% if not tmp_tertiary %}
+				<li class="active-link">
+			{% else %}
+				<li>
+			{% endif %}
+				<a href="/resources/{{ tmp_primary.slug }}/{{ tmp_secondary.slug}}" 
+					class="rightlink">Overview
+				</a>
+			</li>
+			{% if not request.user|has_group:"customer" %}
+				<li>
+					<a href="{% url 'upload' %}">Upload</a>
+				</li>
+			{% endif %}
+		</ul>
+		<ul class="sidebar-nav">
+			<li class="divider"></li>
+			{% if tags|length > 0 %}
+			{% for tag in tags %}
+				{% if request.user.is_authenticated %}
+					{% if tmp_tertiary.slug == tag.slug %}
+						<li class="active-link">
+					{% else %}
+						<li>
+					{% endif %}
+						<a href="/resources/{{ tmp_primary.slug }}/{{ tmp_secondary.slug }}/{{ tag.slug }}">
+							{{ tag.classification }}
+						</a>
+					</li>
+				{% else %}
+					<li>
+						<a href="#">{{ tag.classification }}</a>
+					</li>
+				{% endif %}
+			{% endfor %}
+			{% else %}
+				<li>
+					<a href="#">No sub-classes</a>
+				</li>
+			{% endif %}	
+			<li class="divider">
+			</li>
+		</ul>
+	</div>
+</div>

@@ -1,0 +1,100 @@
+{% extends "index.html" %}
+{% load static %}
+{% load avatar_tags %}
+{% load user_tags %}
+
+{% block content %}
+
+<!-- Portfolio Grid Section -->
+<section id="dashboard">
+	<div class="container">	
+		<div class="row">
+			<div class="col dash_col dash_animate"  onclick="location.href={% url 'my_courses'%}" style="cursor: pointer;"> 
+				<div class="dash_extra " style="background-color: #1b67b8;" >
+					<a href="{% url 'my_courses' %}" >
+						<img src="{% static 'img/my_courses-100.png' %}" class="dash-img" alt="">
+						<img src="{% static 'gif/my_courses.gif' %}" class="dash-img centered-element" alt="">
+					 </a>	
+					 <p class="dash_menu_text_color"> My courses</p>				 	
+				</div>
+			</div>
+
+			<div class="col dash_col dash_animate"  onclick="location.href={% url 'resources'%}" style="cursor: pointer;">
+				<div class="dash_extra " style="background-color: #3176c1;" >
+					<a href="{% url 'resources' %}">
+						<img src="{% static 'img/resources-100.png' %}" class="dash-img" alt="">
+						<img src="{% static 'gif/resources.gif' %}" class="dash-img centered-element" alt="">
+					 </a>	
+					 <p class="dash_menu_text_color"> Resources</p>				 	
+				</div>
+			</div>
+
+			<div class="col dash_col dash_animate"  onclick="location.href={% url 'meetings'%}" style="cursor: pointer;">
+				<div class="dash_extra" style="background-color: #5190d3">
+					<a href="{% url 'meetings'%}">
+						<img src="{% static 'img/meetings-100.png' %}" class="dash-img" alt="">
+						<img src="{% static 'gif/meetings.gif' %}" class="dash-img centered-element" alt="">												
+					</a>
+					<p class="dash_menu_text_color">Meetings</p>					  
+				</div>
+			</div>
+
+			<div class="col dash_col dash_animate"  onclick="location.href={% url 'calendar'%}" style="cursor: pointer;">
+				<div class="dash_extra" style="background-color: #66a3e4">
+					<a href="{% url 'calendar'%}">
+						<img src="{% static 'img/calendar-100.png' %}" class="dash-img" alt="">
+						<img src="{% static 'gif/calendar.gif' %}" class="dash-img centered-element" alt="">						
+					</a>
+					<p class="dash_menu_text_color">Calendar</p>					  
+				</div>
+			</div>
+
+			<div class="col dash_col dash_animate"  onclick="location.href={% url 'portfolio'%}" style="cursor: pointer;">
+				<div class="dash_extra" style="background-color: #7fb7f2">
+					<a href="{% url 'portfolio'%}">
+						<img src="{% static 'img/portfolio-100.png' %}" class="dash-img" alt="">
+						<img src="{% static 'gif/portfolio.gif' %}" class="dash-img centered-element" alt="">						
+					</a>
+					<p class="dash_menu_text_color">Portfolio</p>					  
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-8 about_you_dvi" onclick="location.href={% url 'my_profile'%}" style="cursor: pointer;">
+				<div class="about_you_dvi_title">
+					<div class="dash_div_title">
+						About You
+					</div>
+					<div>
+						<img src="{% static 'img/about_you_banner.png' %}" class="fill_div_by_img">
+						<div class="about_you_img_text">
+							{{ request.session.user_first_name }}
+						</div>
+					</div>
+				</div>
+				{% avatar request.session.avatar 120 class="rounded-circle img-thumbnail img-fluid about_you_img_avatar" id="user_avatar"  %}				
+			</div>
+
+			<div class="col-4 ml-auto upcoming_meetings_dvi">
+				<div class="dash_div_title">
+					Upcoming Meetings
+				</div>
+				<div class="dash_div_text">
+					{{meeting_datetime}}
+				</div>
+				<div>
+					<img src="{% static 'img/upcoming_meetings.png' %}" style="padding-top: 1em;">
+				</div>
+				<div class="dash_div_text">
+					{{teacher_name}}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+	
+
+	
+{% endblock %}	
+
+

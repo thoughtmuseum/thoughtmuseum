@@ -1,0 +1,198 @@
+body {
+    overflow-x: hidden;
+    font-family: "Helvetica Light",sans-serif;
+    font-size: 14px;
+	font-weight: 500;
+	color: #333;
+}
+
+header#dashboard .container {
+	background: #fff;
+	color: black;
+    padding-top: 70px;
+    padding-bottom: 10px;
+}
+
+header#dashboard .container p {
+    font-weight: normal;
+    font-size: 45px;
+    text-transform: uppercase;
+}
+
+
+section#dashboard p {
+    font-size: 18px;
+    
+    text-transform: uppercase;
+}
+
+section#dashboard {
+    background: #fff;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+section#dashboard .dash_extra {
+	padding-bottom: 50px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-transform: uppercase;      
+}
+
+.h4, h4 {
+    font-size: 18px;
+}
+
+.centered-element{
+    margin-left:  auto;
+    margin-right: auto;
+    text-align: center;
+    display: block;
+}
+
+
+.section-title {
+	text-align: center;
+	padding-top: 20px;
+}
+
+.meetings-center {
+	text-align: center;
+}
+
+.future-meetings .btn .btn-sm .btn-outline .connect {
+	color: red;
+}
+
+.btn-outline {
+    border: solid 2px #2c3e50;
+	margin-top: auto;
+	margin-bottom: auto;
+    font-size: 15px;
+    color: #2c3e50;
+    background: 0 0;
+    transition: all .1s ease-in-out;
+}
+
+
+.btn-outline:hover,
+.btn-outline:focus,
+.btn-outline:active,
+.btn-outline.active {
+    border: solid 2px #470e9c;
+    color: #fff;
+    background: #547dbf;
+}
+
+.calendar-event-disabled {
+	background-color: lightgray !important;
+	border: 1px solid lightgray !important;
+	color: darkgray !important;
+}
+
+.feather-16{
+    width: 16px;
+    height: 16px;
+}
+
+.dash_col {
+    padding-right: 0px;
+    padding-left: 0px;
+    flex-grow: 0;
+    width: 20%;
+    
+    flex-basis: auto;
+}
+
+
+.dash_animate div a img:last-child {
+    display: none !important;  
+  }
+
+.dash_animate div:hover a img:last-child {
+    display: block !important;  
+}
+
+.dash_animate div:hover a img:first-child {
+    display: none !important;  
+}
+
+.dash_animate div:hover p {
+    font-weight: bold;
+}
+
+.fill_div_by_img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;  
+}
+
+.about_you_dvi{
+    padding-left: 0px;
+    padding-right: 2em;  
+    margin-top: 40px;
+}
+    
+.about_you_dvi_title{
+    padding-left: 0px;     
+    background-color: #e5e5e5;
+}
+
+.upcoming_meetings_dvi{    
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-top: 40px;   
+}
+
+.dash_div_title{
+    background-color: #e5e5e5;
+    color: #7f7f7f;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: left;
+    padding-left: 1rem;
+    font-size: 18px;
+}
+
+.dash_div_text{
+    color: #9c9c9c;
+    text-align: center;
+    font-size: 1.5em;
+    text-transform: none !important;
+    padding-top: 1rem;    
+    padding-left: 1rem;
+}
+
+.dash_menu_text_color{
+    color: white;
+    text-transform: none !important;
+}
+
+.about_you_img_text{
+    position: absolute;
+    top: 25%;
+    left: 43%;
+    color: white;
+    font-size: 1.5em;
+}
+
+.about_you_img_avatar{
+    position: absolute;
+    top: 35%;
+    left: 38%;   
+}
+
+.menu_text_button{
+    font-weight: 900;
+    padding-right: 3em !important;
+}
+
+.label_search_calendar{
+    padding-top: 0.6em;
+}

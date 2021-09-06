@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<section class="top-headless-margin">
+	<div class="container">
+		<hr>
+		<div class="row">
+			<div class='col-6 offset-3'>
+				
+				<h3 class='section-title'>Register for free!</h3>
+				<form method="post" action=".">
+  				  {% csrf_token %}
+  					{{ form|crispy }}
+
+  				  <input class='btn btn-block btn-primary' type="submit" value="Join" />
+			  	</form>
+			</div>
+		</div>		
+		<div class='row'>
+			<div class='col-6 offset-3 text-align-center'>
+				<p>Need to <a href="{% url 'login' %}">Login</a>?</p>
+			</div>
+		</div>
+		<hr>
+	</div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<section class="top-headless-margin">
+	<div class="container">
+		<div class="row">
+			<div class='col-sm-12'>
+				<h1>Resource Upload</h1>
+				<h4>Please familiarize yourself with this form and chose ALL options that 
+					 are applicable.</h4>
+                  <hr class="star-light">
+				<form method="post" 
+					action="{% url 'upload' %}" 
+					enctype="multipart/form-data"
+					>
+  				  	{% csrf_token %}
+				  	{{ form.non_field_errors }}					
+					{% crispy form %}
+			  	</form>
+			</div>
+		</div>
+		<hr/>
+		<div class='row'>
+			<div class='col-sm-12 text-align-center'>
+				<p>Or cancel and go back to your <a href="/">Dashboard</a></p>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+{% endblock %}
+

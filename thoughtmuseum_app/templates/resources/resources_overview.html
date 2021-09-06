@@ -1,0 +1,52 @@
+{% extends "index.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<section id="dashboard">
+	<div class="container">
+		<div class="row" style="padding-top: 2em;">				
+				<div class="col-md-4 col-sm-6">
+					<a href="test-prep" class="resource-link dash-extra">
+							<img src="/static/img/test-prep.png" class="dash-img"/>
+							<p>Test Prep</p></a>
+				</div>
+				
+				<div class="col-md-4 col-sm-6">
+					<a href="career-planning" class="resource-link dash-extra">
+							<img src="/static/img/career-planning.png" class="dash-img"/>
+							<p>Career Planning</p></a>
+				</div>
+				
+				<div class="col-md-4 col-sm-6">
+					<a href="brain-training" class="resource-link dash-extra">
+							<img src="/static/img/brain-training.png" class="dash-img"/>
+							<p>Brain Training</p></a>
+				</div>
+				
+				<div class="col-md-4 col-sm-6">
+					<a href="leveled-reading" class="resource-link dash-extra">
+							<img src="/static/img/leveled-reading.png" class="dash-img"/>
+							<p>Leveled Reading</p></a>
+				</div>
+				
+				<div class="col-md-4 col-sm-6">
+					<a href="literacy-and-assessment" class="resource-link dash-extra">
+							<img src="/static/img/literacy-and-assessment.png" class="dash-img"/>
+							<p>Literacy<br />and<br/> Assessment</p></a>
+				</div>
+				
+				<div class="col-md-4 col-sm-6">
+					<a href="education-and-policy" class="resource-link dash-extra">
+							<img src="/static/img/education-and-policy.png" class="dash-img"/>
+							<p>Education<br/>and<br/>Policy</p></a>
+				</div>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<h4 class="text-center text-danger">Resources are still under construction and some features may not work.</h4>
+	</div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+<section class="top-headless-margin">
+	<div class="container">
+		<div class='row'>
+			<div class='col-4 offset-4 centered-element'>
+			<img src="{% static 'img/logo2.png' %}" alt=""  width=150px>
+			</div>
+		</div>
+
+		<hr/>
+		<div class='row'>
+			<div class='col-4 offset-4'>
+				<h3 class='section-title'>Login</h3>
+				<form method="post" action=".">
+		  			{% csrf_token %}
+		  			{{ form|crispy }}
+		  	  		<input class='btn btn-primary' type="submit" value="Submit" />
+		  	  	  	<input type="hidden" name="next" value="{{ next }}" />
+				</form>
+			</div>
+		</div>
+		<hr/>
+		{% comment %}
+		<div class='row'>
+			<div class='col-4 offset-4 text-align-center'>
+				<p>Forgot password? <a href="{% url 'password_reset' %}">Reset it</a>!</p>
+				<p>Not member? <a href="{% url 'django_registration_register' %}">Register</a>!</p>
+			</div>
+		</div>
+		{% endcomment %}
+	</div>
+</section>
+
+{% endblock %}

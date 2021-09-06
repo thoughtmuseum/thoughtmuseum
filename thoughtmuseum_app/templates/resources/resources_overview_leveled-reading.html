@@ -1,0 +1,72 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Header -->
+<header id="dashboard">
+	<div class="container">
+		<div class="row  text-center">
+			<div class="col-lg-12">
+				<h2> Welcome, {{ user.first_name }} !</h2>
+			</div>
+		</div>
+	</div>
+</header>
+
+<section id="dashboard">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 primary-category-title">
+				<a href="/resources">
+					<h3>Leveled Reading</h3>
+				</a>
+			</div>
+				<div class="col-lg-12">
+					<div class="lr-wrapper">
+						<a href="/resources/leveled-reading/k" class="lr lr-k"></a>
+						<a href="/resources/leveled-reading/1" class="lr lr-1"></a>
+						<a href="/resources/leveled-reading/2" class="lr lr-2"></a>
+						<a href="/resources/leveled-reading/3" class="lr lr-3"></a>
+						<a href="/resources/leveled-reading/4" class="lr lr-4"></a>
+						<a href="/resources/leveled-reading/5" class="lr lr-5"></a>
+						<a href="/resources/leveled-reading/6" class="lr lr-6"></a>
+						<a href="/resources/leveled-reading/7" class="lr lr-7"></a>
+						<a href="/resources/leveled-reading/8" class="lr lr-8"></a>
+						<a href="/resources/leveled-reading/9" class="lr lr-9"></a>
+						<a href="/resources/leveled-reading/10" class="lr lr-10"></a>
+						<a href="/resources/leveled-reading/11" class="lr lr-11"></a>
+						<a href="/resources/leveled-reading/12" class="lr lr-12"></a>
+						<div class="lr-buttons">
+							<a href="/resources/leveled-reading/graduate" class="lr-btn-sm lr-btn-graduate">GRADUATE</a>
+							<a href="/resources/leveled-reading/upper" class="lr-btn-sm lr-btn-upper">UPPER<br>DIVISION</a>
+							<a href="/resources/leveled-reading/lower" class="lr-btn-sm lr-btn-lower">LOWER<br>DIVISION</a>
+							<a href="/resources/leveled-reading/suprise" class="lr-btn-lg lr-btn-suprise">SUPRISE<br>ME</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-12">
+					<div class="lr-numbers">
+						<a href="/resources/leveled-reading/k"><div class="lr-num">K</div></a>
+						<a href="/resources/leveled-reading/1"><div class="lr-num">1</div></a>
+						<a href="/resources/leveled-reading/2"><div class="lr-num">2</div></a>
+						<a href="/resources/leveled-reading/3"><div class="lr-num">3</div></a>
+						<a href="/resources/leveled-reading/4"><div class="lr-num">4</div></a>
+						<a href="/resources/leveled-reading/5"><div class="lr-num">5</div></a>
+						<a href="/resources/leveled-reading/6"><div class="lr-num">6</div></a>
+						<a href="/resources/leveled-reading/7"><div class="lr-num">7</div></a>
+						<a href="/resources/leveled-reading/8"><div class="lr-num">8</div></a>
+						<a href="/resources/leveled-reading/9"><div class="lr-num">9</div></a>
+						<a href="/resources/leveled-reading/10"><div class="lr-num">10</div></a>
+						<a href="/resources/leveled-reading/11"><div class="lr-num">11</div></a>
+						<a href="/resources/leveled-reading/12"><div class="lr-num">12</div></a>
+						<a><div class="lr-num">&nbsp;</div></a>
+						<a><div class="lr-num">&nbsp;</div></a>
+						<a><div class="lr-num">&nbsp;</div></a>
+					</div>
+				</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

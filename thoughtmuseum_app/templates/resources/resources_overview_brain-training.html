@@ -1,0 +1,58 @@
+{% extends "index.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<!-- Header -->
+<header id="dashboard">
+	<div class="container">
+		<div class="row  text-center">
+			<div class="col-lg-12">
+				<h2> Welcome, {{ user.first_name }} !</h2>
+			</div>
+		</div>
+	</div>
+</header>
+
+<section id="dashboard">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 explanation-wrapper">
+				<div class="col-lg-12 primary-category-title">
+					<a href="{% url 'resources' %}">
+						<h3> Brain Training </h3>
+					</a>
+				</div>
+				<div class="text-center">
+					<div class="row">
+						<div class="col-md-4 col-sm-6">
+							<a href="brain-training/research-papers" class="resource-link dash-extra">
+								<img src="{% static 'img/research_icon.png' %}" class="dash-img" />
+								<p>Research Papers</p>
+							</a>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<a href="brain-training/exercises-and-plans" class="resource-link dash-extra">
+								<img src="{% static 'img/exercises_icon.png' %}" class="dash-img" />
+								<p>Exercises <br>
+								and <br>
+								Plans</p>
+							</a>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<a href="brain-training/helpful-links" class="resource-link dash-extra">
+								<img src="{% static 'img/links_icon.png' %}" class="dash-img" />
+								<p>Helpful Links</p>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "index.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+
+<section id="sidenavbar" class="top-headless-margin">
+    <div class="sidebar" id="container">
+		<div class="row">
+	        <div class="col-md-2">
+				{% include 'resources/sidenavbar.html' %}		
+			</div>
+	        <div class="col-md-8 main-resources">
+				<div class="col-md-9 offset-md-2">
+					<h6> You are here: </h6>
+					<h4> 
+						<a href="/resources">{{ tmp_primary.classification }} 
+						</a>
+						{% if tmp_secondary.classification %}
+							{% if tmp_primary.classification != tmp_secondary.classification %}
+								<span class="glyphicon glyphicon-arrow-right" 
+									style="margin: 0 10px 0 10px;"></span>
+								<a href="/resources/{{ tmp_primary.slug }}">
+									{{ tmp_secondary.classification }} 
+								</a>
+							{% endif %}
+						{% endif %}
+						{% if tmp_tertiary %}
+							<span class="glyphicon glyphicon-arrow-right" 
+								style="margin: 0 10px 0 10px;"></span>
+								{{ tmp_tertiary.classification }} 
+						{% endif %}
+
+					</h4>
+					<hr class="star-light">
+					{% if matching_ti %}
+						<ul class="selected-resources">
+							{% for item_ti in matching_ti %}
+								<li>
+									<a href="{{ item_ti.0 }}" 
+										target="_blank">{{ item_ti.1 }}
+									</a>
+									<br>
+									{{ item_ti.2 }}
+								</li>
+								{% endfor %}
+						</ul>
+							{% else %}
+								No documents.
+							{% endif %}
+				</div>
+			</div>
+			<div class="col-md-2 level-adjust">
+				<h6>Refine selection</h6>
+				<form method="post"
+					action=""
+					enctype="multipart/form-data"
+					>
+				  	{% csrf_token %}
+					{% crispy form %}
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+	  <!-- Select all/none on resources browser -->
+	  <script>
+		$("[name=select-all-grades]").click(function(source) { 
+			checkboxes = $("[name=grade_level]");
+			for(var i in checkboxes){
+				checkboxes[i].checked = source.target.checked;
+			}
+		});
+		</script>
+		<script>
+		$("[name=select-all-difficulties]").click(function(source) { 
+			checkboxes = $("[name=difficulty_level]");
+			for(var i in checkboxes){
+				checkboxes[i].checked = source.target.checked;
+			}
+		});
+		</script>
+
+{% endblock %}

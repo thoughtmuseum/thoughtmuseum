@@ -1,0 +1,209 @@
+{% extends "index.html" %}
+{% load static %}
+{% load user_tags %}
+
+{% block content %}
+
+<!-- Header -->
+<section id="meetings" class="top-headless-margin">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 meetings-center">
+				{% if request.user|has_group:"scheduler" %}
+				<a href="{% url 'scheduler' %}" class="btn btn-lg btn-outline">
+					<i data-feather="calendar"></i> Schedule a meeting
+				</a>
+				{% endif %}
+
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col meetings-center">
+				<p>
+					<h3> Meeting Overview </h3>
+				</p>
+				{% if request.user|has_group:"scheduler" %}
+					<p> Note that all times refer to students timezone.</p>
+				{% else %}
+					<p> Note that all times refer to your timezone.</p>
+					<p> Your timezone is: {{ timezone }} </p>
+				{% endif %}			
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col future-meetings">
+				<h4>Upcoming meetings:</h4>
+				{% if future_meetings %}
+				<table class="table table-striped">
+					<tr>
+						<th>Date</th>
+						<th style="width:10%">Time</th>
+						{% if request.user|has_group:"scheduler" %}
+						<th>With (+ for group)</th>
+						<th>Teacher</th>
+						{% else %}
+						<th style="width:20%">With (+ for group)</th>
+						{% endif %}
+						
+						{% if request.user|has_group:"customer" or request.user|has_group:"parent" %}
+							<th>Meeting ID</th>
+							<th></th>
+							<th>Meeting password</th>
+							<th></th>
+							{% if request.user|has_group:"customer" %}
+								<th>Start meeting</th>
+							{% endif %}
+						{% elif request.user|has_group:"teacher" %}
+							<th>Start meeting</th>
+						{% endif %}
+						{% if request.user|has_group:"scheduler" %}
+						<th></th>
+						{% endif %}
+					</tr>
+					{% for m in future_meetings %}
+					<tr>
+						<td>{{ m.date }}</td>
+						<td>{{ m.time }}</td>
+						{% if request.user|has_group:"scheduler" %}
+							<td>{{ m.student_name}} <b><b>{{m.group}}</b></b></td>
+							<td>{{ m.teacher_name}}</td>
+							<td class="py-1">
+								<a onclick="deleteMeeting({{m.id}})" class="btn btn-sm btn-outline connect">
+									<i class="feather-16" data-feather="trash"></i></a>
+							</td>
+						{% elif request.user|has_group:"customer" or request.user|has_group:"parent" %}
+							{% if request.user|has_group:"parent" %}
+								<td>{{m.student_name}} with {{ m.teacher_name }} <b>{{m.group}}</b></td>
+							{% else %}
+								<td>{{ m.teacher_name }} <b>{{m.group}}</b></td>
+							{% endif %}
+							<td>								
+								<input type="text" size="12" style="background: transparent;border: none;" name="{{m.meeting_id}}" id="{{m.meeting_id}}" value="{{m.meeting_id}}" readonly>
+							</td>
+							<td class="py-1">
+								<a onclick="copyToClipboard('#{{m.meeting_id}}')" class="btn btn-sm btn-outline connect">
+									<i class="feather-16" data-feather="clipboard"></i>
+									Copy
+								</a>
+							</td>
+							<td>								
+								<input type="text" size="12" style="background: transparent;border: none;" name="{{m.meeting_id}}_pwd" id="{{m.meeting_id}}_pwd" value="{{m.meeting_password}}" readonly>
+							</td>
+							<td class="py-1">
+								<a onclick="copyToClipboard('#{{m.meeting_id}}_pwd')" class="btn btn-sm btn-outline connect">
+									<i class="feather-16" data-feather="clipboard"></i>
+									Copy
+								</a>
+							</td>
+							{% if request.user|has_group:"customer" %}
+								<td class="py-1">
+									<a href="{{ m.join_url }}" class="btn btn-sm btn-outline connect"
+									target="_blank">
+									<i class="feather-16" data-feather="phone-call"></i>
+										Connect
+									</a>
+								</td>	
+							{% endif %}
+
+						{% elif request.user|has_group:"teacher" %}
+							<td>{{ m.student_name }} <b>{{m.group}}</b></td>
+							<td class="py-1">
+								<a href="{{ m.start_url }}" class="btn btn-sm btn-outline connect"
+								 target="_blank">
+								 <i class="feather-16" data-feather="phone-call"></i>
+									Connect
+								</a>
+							</td>					
+						{% endif %}
+					</tr>
+						{% endfor %}
+				</table>
+				{% else %}
+				No meetings found !
+				{% endif %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col future-meetings">
+				<h4>Past meetings:</h4>
+				{% if past_meetings %}
+				<table class="table table-striped">
+					<tr>
+						<th>Date</th>
+						<th>Time</th>
+						{% if request.user|has_group:"scheduler" %}
+						<th>With (+ for group)</th>
+						<th>Teacher</th>
+						{% else %}
+						<th>With (+ for group)</th>
+						{% endif %}
+					</tr>
+					{% for m in past_meetings %}
+					<tr>
+						<td>{{ m.date }}</td>
+						<td>{{ m.time }}</td>
+						{% if request.user|has_group:"scheduler" %}
+						<td>{{ m.student_name}} <b>{{m.group}}</b></td>
+						<td>{{ m.teacher_name}}</td>
+						{% elif request.user|has_group:"customer" %}
+						<td>{{ m.teacher_name }} <b>{{m.group}}</b></td>
+						{% elif request.user|has_group:"parent" %}
+						<td>{{m.student_name}} with {{ m.teacher_name }} <b>{{m.group}}</b></td>
+						{% elif request.user|has_group:"teacher" %}
+						<td>{{ m.student_name }} <b>{{m.group}}</b></td>
+						{% endif %}
+					{% endfor %}
+				</table>
+				{% else %}
+				No meetings found !
+				{% endif %}
+			</div>
+		</div>	
+	</div>
+</section>
+
+<script type="text/javascript">
+	function get_recordings(meeting_id, control_id) {
+		$.ajax({
+			type: "GET",
+			url: "/meetings/recordings?meeting_id=" + meeting_id,
+			success: function (data) {
+				$('#id_td_recordings_' + control_id).html(data);
+			}
+		});
+	};
+
+    function onChangeRecording(select) {
+        if (select.value) {
+            links = select.value.split(";");
+            document.getElementById("id_btn_play").href = links[0];
+            document.getElementById("id_btn_download").href = links[1];
+        }
+    };
+
+	function deleteMeeting(meeting_id) {
+		if (confirm('Delete this meeting?')) {
+			$.ajax({
+			type: "POST",
+			url: "{% url 'delete_meeting' %}",
+			data: {
+				'meeting_id':meeting_id,
+				'csrfmiddlewaretoken':'{{csrf_token}}'
+			},
+			success: function() {
+				window.location.reload(true);
+			}
+			});
+		}
+	};
+	
+	function copyToClipboard(element) {		
+		$(element).select();
+		document.execCommand("copy");  
+		$(element).blur();
+	}
+</script>
+
+{% endblock content %}

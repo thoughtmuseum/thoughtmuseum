@@ -1,0 +1,15 @@
+{% load i18n avatar_tags %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <p>{% trans "Your current avatar:" %}</p>
+    {% avatar request.session.avatar 120 class="rounded-circle img-thumbnail img-fluid centered-element" %}
+    {% if not avatars %}
+        <p>You haven't uploaded an avatar yet. Please upload one now.
+            <span style="font-size: .7em;"> (1M is a file size limit for avatar upload) </span></p>
+    {% endif %}
+    <form enctype="multipart/form-data" method="POST" action="{% url 'my_profile' %}">
+        {{ upload_avatar_form|crispy }}
+        <p>{% csrf_token %}<input type="submit" value="{% trans "Upload New Image" %}" /></p>
+    </form>
+{% endblock %}
